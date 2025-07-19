@@ -1,6 +1,6 @@
 efficiency = 0.9;
 g = 9.80665;
-platform_mass = 5; % kg
+platform_mass =0.001; % kg
 N = 9; % gear ratio
 Jm = 12e-5; % motor inertia in motor frame ( kg . m^2)
 Jmr = Jm*N^2; % motor inertia in robot frame ( kg . m^2)
@@ -8,9 +8,9 @@ cr = 1e-2;
 cl = 1e-2;
 density_cyl = (2 * (Jm * N^2)) / (pi * cr^4 * cl);
 % rod_mass = 0.55; % kg
-% arm_mass  = 0.33; % kg
+arm_mass  = 0.33; % kg
 rod_mass = 1e-3; % kg
-arm_mass  = 1e-3; % kg
+% arm_mass  = 1e-3; % kg
 peak_torque = 45*efficiency/N; % mit motor peak torque in motor frame
 rated_torque = 13*efficiency/N; % mit motor rated torque in motor frame
 % 

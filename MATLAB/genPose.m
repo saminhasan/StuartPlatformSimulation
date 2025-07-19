@@ -30,8 +30,8 @@ function [trajectory, tf, ts] = genPose(n)
     x = 0.05  * sin(2 * pi * f_trajectory * time)*0; % z (horizontal component, front back)
     y = 0.05  * sin(2 * pi * f_trajectory * time)*0; % x (horizontal component, left right)
     
-    Rz = deg2rad(15.0)  *  sin(2 * pi * f_trajectory/2 * time + phi0 -pi/2);
-    Rx = deg2rad(3.0)  *  sin(2 * pi * f_trajectory/2 * time+ phi0 -pi/2);
-    Ry = deg2rad(2.5) * sin(2 * pi *  f_trajectory * time+ phi0 -pi/2);
+    Rz = deg2rad(15.0)  *  sin(2 * pi * f_trajectory/2 * time + phi0 -pi/2)*0;
+    Rx = deg2rad(3.0)  *  sin(2 * pi * f_trajectory/2 * time+ phi0 -pi/2)*0;
+    Ry = deg2rad(2.5) * sin(2 * pi *  f_trajectory * time+ phi0 -pi/2)*0;
     trajectory = [time, x, y, z, Rx, Ry, Rz];
 end

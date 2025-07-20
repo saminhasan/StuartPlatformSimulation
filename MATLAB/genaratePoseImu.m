@@ -1,5 +1,7 @@
 function [pose, tf, ts]= genaratePoseImu(num_cycle) %#ok<INUSD>
-    method = 4;
+    fh = 0.5;
+    fl = 50;
+    method = 1;
     file_number = 1;
     DATA_PATH = 'C:\Users\james\OneDrive\Desktop\StuartPlatformSimulation\MATLAB\IMUData';%% change this address
     filelist = string({dir(fullfile(DATA_PATH, '*.mat')).name});
@@ -16,8 +18,7 @@ function [pose, tf, ts]= genaratePoseImu(num_cycle) %#ok<INUSD>
     accel = imu_data(:,2:4);
     gyro  = deg2rad(imu_data(:,5:7));
     if (method ==4)
-        fh = 0.5;
-        fl = 50;
+
         yaw = LPFilter(filter(2*ts, [1 0 -1], HPFilter(gyro(:,3), fs, fh)), fs, fl);
         pitch = LPFilter(filter(2*ts, [1 0 -1], HPFilter(gyro(:,2), fs, fh)), fs, fl);
         roll = LPFilter(filter(2*ts, [1 0 -1], HPFilter(gyro(:,1), fs, fh)), fs, fl);
@@ -27,6 +28,9 @@ function [pose, tf, ts]= genaratePoseImu(num_cycle) %#ok<INUSD>
         fuse = imufilter('SampleRate', fs);
         q1 = fuse(accel, gyro);
         eul = eulerd(q1, 'ZYX', 'frame');
+        eul(:,1) = LPFilter(eul(:,1), fs, fl);
+        eul(:,2) = LPFilter(eul(:,2), fs, fl);
+        eul(:,3) = LPFilter(eul(:,3), fs, fl);
     end
     if (method ==2)
         madgwick = MadgwickAHRS('SamplePeriod', ts, 'Beta', 0.1);

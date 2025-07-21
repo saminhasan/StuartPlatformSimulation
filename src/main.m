@@ -9,6 +9,6 @@ tf = time(end);
 plotTrajectory(trajectory);
 jointAngles = sp.move(trajectory);
 plotMotorAngles(jointAngles);
-simOut = sim("SP.slx");
+simOut = sim("SPPD.slx");
 plotSimResults(simOut, trajectory, sp);
 

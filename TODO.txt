@@ -1,0 +1,3 @@
+fix SPPD and SPD
+add SPL
+decide TrajIMU method 4 final

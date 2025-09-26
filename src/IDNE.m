@@ -1,4 +1,5 @@
 clc; close all; clear all; %#ok<CLALL>
+% inverse dynamic newton euler.
 params;
 sp = StuartPlatform(r, n, rB, dB, rP, dP);
 mode = 'imu';

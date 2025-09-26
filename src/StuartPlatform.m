@@ -21,7 +21,7 @@ function obj = StuartPlatform(r, n, rB, dB, rP, dP)
     obj.homez = mean(obj.P(:,3));
     obj.HP = obj.P - obj.H;
     obj.BH = obj.H - obj.B;
-    %--------calculate quaternion for corret simscape initialization------------------------------------------
+    %--------calculate quaternion for correct simscape initialization------------------------------------------
     obj.q_rots = zeros(6, 4);
     for i = 1:6
         u = rotz(rad2deg(beta(i))) * rotx(90) * [1 0 0; 0 1 0; 0 0 1]; % u is the co-ordinate frame at the tip of the servo

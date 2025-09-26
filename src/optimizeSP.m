@@ -1,6 +1,6 @@
 clc; close all; clear all; %#ok<CLALL>
 params
-trajectory = genPoseSynthetic(5);
+trajectory = genPoseImu(5);
 time = trajectory(:,1);
 tf = time(end);
 pbs  = (0.3:0.1:1.0)';
@@ -8,6 +8,7 @@ sim_no    = size(pbs,1);
 outs = cell(1,sim_no);           % preallocate
 homezz = zeros(sim_no,1);
 for i = 1:sim_no
+    sprintf("sim no : %d", i);
     pb = pbs(i);
     rP = rB * pb;
     sp = StuartPlatform(r, n, rB, dB, rP, dP);

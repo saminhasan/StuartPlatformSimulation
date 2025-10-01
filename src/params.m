@@ -26,18 +26,15 @@ Je = (Jmr + Jr);
 % disp(['Inertia Matched platform weight : ', num2str((Jmr/(r^2 )) * 6), 'Kg']);
 f_trajectory = 3;
 tau_0 = ((platform_mass / 6) * g * r) + (arm_mass * g * r / 2) + (rod_mass* g * r);
-angular_spring_constant = ((((platform_mass / 6) * r^2) + (rod_mass * r^2) ...
-    + (arm_mass * (r/2)^2) + Jmr) * (2 * pi * f_trajectory)^2);
-angular_spring_offset = ((tau_0) / angular_spring_constant);
-Ke = 0;%angular_spring_constant;
+
 % % Control parameters
 w_traj = f_trajectory * 2 * pi; % trajectory frequency
 wn = w_traj * 5;
 % wn = 2 * pi * 20;
 zeta = sqrt(2); % damping ratio
-P = wn^2 * Je - Ke; % proportional gain
+P = wn^2 * Je; % proportional gain
 D = 2 * zeta * wn * Je; % derivative gain
-w_f = wn * 10; % filter frequency
+w_f = wn * 10; % derivative filter frequency
 
 
 riseTime = 0.1;

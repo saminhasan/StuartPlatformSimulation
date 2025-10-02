@@ -11,7 +11,7 @@ function [] = plotPlatformInfo(out, trajectory, homeZ)
     azsim = out.pose_simscape.Data(:,7);
 
     % Unpack values from the pose struct array simulation input
-    time = trajectory(:,1) + riseDealy;
+    time = trajectory(:,1);
     x = trajectory(:,2);
     y = trajectory(:,3);
     z = trajectory(:,4) + homeZ;
@@ -113,25 +113,25 @@ function [] = plotPlatformInfo(out, trajectory, homeZ)
     fprintf("Peak acceleration: Setpoint = %.3fg, Actual = %.3fg\n", max(ddz(3:end)/9.81), max(azsim(3:end)/9.81));
 
     
-    figure('Name', 'AccZ (m/s^2) vs Theta (degrees)', 'NumberTitle', 'off');
-    colors = ['r', 'g', 'b', 'c', 'm', 'y'];
-    thetas = out.simout.Data(:, (2:4:22)-1);
-    hold on;
-    time_plots = gobjects(1, 6); 
-    labels = cell(1, 6);
-    for i = 1:6
-        % Plot torque vs time for each motor
-        time_plots(i) = plot(rad2deg(thetas(:, i)), azsim, 'Color', colors(i));
-        labels{i} = ['Motor ' num2str(i)]; % Store labels in a cell array
-    end
-    
-    % Add legend with motor labels
-    legend(time_plots, labels, 'Location', 'northwest');
-    
-    xlabel('Theta (degrees)');
-    ylabel('AccZ (m/s^2)');
-    title('AccZ (m/s^2) vs Theta (degrees)');
-    grid on;
-    grid minor;
-    hold off;
+    % figure('Name', 'AccZ (m/s^2) vs Theta (degrees)', 'NumberTitle', 'off');
+    % colors = ['r', 'g', 'b', 'c', 'm', 'y'];
+    % thetas = out.simout.Data(:, (2:4:22)-1);
+    % hold on;
+    % time_plots = gobjects(1, 6); 
+    % labels = cell(1, 6);
+    % for i = 1:6
+    %     % Plot torque vs time for each motor
+    %     time_plots(i) = plot(rad2deg(thetas(:, i)), azsim, 'Color', colors(i));
+    %     labels{i} = ['Motor ' num2str(i)]; % Store labels in a cell array
+    % end
+    % 
+    % % Add legend with motor labels
+    % legend(time_plots, labels, 'Location', 'northwest');
+    % 
+    % xlabel('Theta (degrees)');
+    % ylabel('AccZ (m/s^2)');
+    % title('AccZ (m/s^2) vs Theta (degrees)');
+    % grid on;
+    % grid minor;
+    % hold off;
 end

@@ -2,6 +2,7 @@ function obj = StuartPlatform(r, n, rB, dB, rP, dP)
     % StuartPlatform class constructor
     % r: radius of the crank arm
     % n: crank arm to connecting rod length ratio
+    obj.hoffset = 0.380/2;
     obj.r = r;
     obj.n = n;
     obj.d = n * r;
@@ -37,8 +38,11 @@ function motorAngles = moveFunc(obj, trajectory)
     motorAngles = zeros(size(trajectory));
         for row=1:length(trajectory)
             pose = trajectory(row,2:7);
-            t = [pose(1), pose(2), pose(3)+obj.homez]';
+            t = [pose(1), pose(2), pose(3)+obj.homez + (obj.hoffset)]';
             R = rotx(rad2deg(pose(4))) * roty(rad2deg(pose(5))) * rotz(rad2deg(pose(6)));
+            % apply -Z local shift
+            offset = R * [0; 0; -obj.hoffset];
+            t = t + offset;
             l = repmat(t, 1, 6)' + (R * obj.Pp')' - obj.B; % leg length
             ek = 2 * obj.r * l(:,3);
             fk = 2 * obj.r * (cos(obj.betaB') .* l(:,1) + sin(obj.betaB') .* l(:,2));

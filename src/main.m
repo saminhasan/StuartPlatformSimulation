@@ -3,7 +3,7 @@ params;
 sp = StuartPlatform(r, n, rB, dB, rP, dP);
 modes = {'sin', 'syn', 'cam', 'imu'};
 mode = modes{4};
-trajectory = window(genTrajectory(mode, 20), 2.0, 1000);
+trajectory = window(genTrajectory(mode, 20), 3.0, 1000);
 time = trajectory(:,1);
 tf = time(end);
 plotTrajectory(trajectory);

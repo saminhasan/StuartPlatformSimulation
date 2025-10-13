@@ -31,7 +31,7 @@ function trajectory = genPoseSynthetic(n)
     z = s - mean(s);% z (vertical component, up down)
 
     Rx = deg2rad(3.0)  *  sin(2 * pi * f_trajectory/2 * time+ phi0 -pi/2); % roll
-    Ry = deg2rad(2.5) * sin(2 * pi *  f_trajectory * time+ phi0 -pi/2); % pitch
+    Ry = deg2rad(2.5) * sin(2 * pi *  f_trajectory * time+ phi0 -pi/2) + deg2rad(5); % pitch
     Rz = deg2rad(15.0)  *  sin(2 * pi * f_trajectory/2 * time + phi0 -pi/2); % yaw
 
     trajectory = [time, x, y, z, Rx, Ry, Rz];

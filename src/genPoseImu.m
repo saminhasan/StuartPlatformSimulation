@@ -2,7 +2,7 @@ function trajectory = genPoseImu(num_cycle) %#ok<INUSD>
     addpath(fullfile(pwd,"quaternion_library"));
     fh = 0.5;
     fl = 15;
-    method = 1;
+    method = 4;
     file_number = 1;
     DATA_PATH = fullfile(pwd, 'IMUData');
     filelist = string({dir(fullfile(DATA_PATH, '*.mat')).name});

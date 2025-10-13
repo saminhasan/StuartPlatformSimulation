@@ -38,10 +38,10 @@ function motorAngles = moveFunc(obj, trajectory)
     motorAngles = zeros(size(trajectory));
         for row=1:length(trajectory)
             pose = trajectory(row,2:7);
-            t = [pose(1), pose(2), pose(3)+obj.homez + (obj.hoffset)]';
+            t = [pose(1), pose(2), pose(3)+ (obj.homez) + (obj.hoffset)]';
             R = rotx(rad2deg(pose(4))) * roty(rad2deg(pose(5))) * rotz(rad2deg(pose(6)));
             % apply -Z local shift
-            offset = R * [0; 0; -obj.hoffset];
+            offset = R * [0.0; 0.0; -obj.hoffset];
             t = t + offset;
             l = repmat(t, 1, 6)' + (R * obj.Pp')' - obj.B; % leg length
             ek = 2 * obj.r * l(:,3);

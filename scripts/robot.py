@@ -44,7 +44,8 @@ class StuartPlatform:
             ]
         ).T
         self.Zhome = mean(sqrt(full(6, self.d**2) - sum((self.H - self.P) ** 2, axis=1)))
-
+        print(self.gammaB)
+        print(self.gammaP)
     def move(self, pose):
         # pose = [Tx, Ty, Tz, psi, theta, phi]
         pose[2] += self.Zhome

@@ -2,7 +2,7 @@ function obj = StuartPlatform(r, n, rB, dB, rP, dP)
     % StuartPlatform class constructor
     % r: radius of the crank arm
     % n: crank arm to connecting rod length ratio
-    obj.hoffset = 0.380/2;
+    obj.hoffset = 8.5 * 0.0254;
     obj.r = r;
     obj.n = n;
     obj.d = n * r;

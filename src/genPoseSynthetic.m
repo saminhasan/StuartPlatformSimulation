@@ -5,7 +5,7 @@ function trajectory = genPoseSynthetic(n)
     % ***************
     g=9.80665;
     gm=1.5*g/2;    % muscle created g, leave at this value
-    p=.33;         % stride period: between 0.33 and 0.44
+    p=3/8;%3/8 = 0.375 %.33;         % stride period: between 0.33 and 0.44
                    % changes the maximum displacement:
                    %    p=0.33 --> -4cm to +2cm
                    %    p=0.40 --> -6cm to +2cm
@@ -19,7 +19,7 @@ function trajectory = genPoseSynthetic(n)
     phi0=2*pi/p*t0;
     v0=gm*p/2/pi*sin(2*pi/p*t0); %#ok<NASGU>
     % time vector needs to restart from zero after each period
-    t_mod = mod(time-0.125,p);
+    t_mod = mod(time + 0.0640,p); % to match with cam trajectory
     a = (-g + gm)          + gm              * cos(2*pi/p*t_mod+phi0) + j1             * (t_mod.*(t_mod<tE)).^o; %#ok<NASGU>
     v = (-g + gm)   * t_mod    + gm * (p/2/pi)   * sin(2*pi/p*t_mod+phi0) + j1/(o+1)       * min(t_mod,tE).^(o+1); %#ok<NASGU>
     s = (-g + gm)/2 * t_mod.^2 - gm * (p/2/pi)^2 * cos(2*pi/p*t_mod+phi0) + j1/(o+1)/(o+2) * min(t_mod,tE).^(o+2) + j1/(o+1)*((t_mod>tE).*tE).^(o+1).*(t_mod-tE);

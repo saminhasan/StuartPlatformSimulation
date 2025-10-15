@@ -10,8 +10,8 @@ function trajectory = genPoseCam(n)
     y = zeros(size(t));
     z = repmat(data.Z - mean(data.Z), n, 1);
     Rx = repmat(deg2rad(data.X_rot - mean(data.X_rot)), n, 1);
-    % Ry = repmat(deg2rad(data.Y_rot - mean(data.Y_rot)), n, 1);    
-    Ry = -repmat(deg2rad(data.Y_rot), n, 1);    
+    Ry = repmat(deg2rad(data.Y_rot - min(data.Y_rot)), n, 1);    
+    % Ry = -repmat(deg2rad(data.Y_rot), n, 1);    
     Rz = repmat(deg2rad(data.Z_rot - mean(data.Z_rot)), n, 1);
     rawTrajectory = [x, y, z, Rx, Ry, Rz];
 

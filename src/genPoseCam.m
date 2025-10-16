@@ -1,5 +1,6 @@
 function trajectory = genPoseCam(n)
     dt = 1e-3;
+    % data = readtable('CSV/Rots_raw.csv', 'CommentStyle', '#');
     data = readtable('CSV/Rots100.csv', 'CommentStyle', '#');
     ts = mean(diff(data.time));
     t = (0:ts:(data.time(end) + ts) * n - ts)';

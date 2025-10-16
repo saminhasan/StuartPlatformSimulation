@@ -1,5 +1,6 @@
 function trajectory = genPoseImu(num_cycle) %#ok<INUSD>
     addpath(fullfile(pwd,"quaternion_library"));
+    g = 9.80665;
     fh = 0.5;
     fl = 15;
     method = 4;
@@ -9,7 +10,7 @@ function trajectory = genPoseImu(num_cycle) %#ok<INUSD>
     data = load(fullfile(DATA_PATH, filelist(file_number)));
     imu_data = data.data_mtl;% Data is saved in matrix name data_mtl
     n = length(imu_data);
-    % plotIMUData(imu_data);
+    plotIMUData(imu_data);
     time = imu_data(:, 1); % Time (s)
     time(:, 1) = time(:, 1) - time(1,1); % Normalize time to start at zero
     dt = mean(diff(time));
@@ -49,7 +50,7 @@ function trajectory = genPoseImu(num_cycle) %#ok<INUSD>
     end
     eul(:,1) = eul(:,1) - mean(eul(:,1));
     eul(:,3) = eul(:,3) - mean(eul(:,3));
-    aclz = accel(:, 3) - 9.81;  % Z Linear Acceleration (m/s^2)
+    aclz = accel(:, 3) - g;  % Z Linear Acceleration (m/s^2)
     ZposAcHP=filter(dt^2,[1,-2,1],HPFilter(aclz, fs, 1)); % Double integrator with Highpass with 1 Hz cutoff
     trajectory = zeros(n,7);
     trajectory(:,1) = time;

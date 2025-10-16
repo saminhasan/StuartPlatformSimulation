@@ -1,10 +1,10 @@
-function [] = plotPlatformInfo(out, trajectory, homeZ)
+function [] = plotPlatformInfo(out, trajectory, sp)
     params
     % Extract data from simulation output
     tsim = out.pose_simscape.Time;
-    xsim = out.pose_simscape.Data(:,1);
+    xsim = out.pose_simscape.Data(:,1) - sp.xshift;
     ysim = out.pose_simscape.Data(:,2);
-    zsim = out.pose_simscape.Data(:,3);
+    zsim = out.pose_simscape.Data(:,3)- sp.zshift;
     Rxsim = out.pose_simscape.Data(:,4);
     Rysim = out.pose_simscape.Data(:,5);
     Rzsim = out.pose_simscape.Data(:,6);
@@ -14,7 +14,7 @@ function [] = plotPlatformInfo(out, trajectory, homeZ)
     time = trajectory(:,1);
     x = trajectory(:,2);
     y = trajectory(:,3);
-    z = trajectory(:,4) + homeZ;
+    z = trajectory(:,4) + sp.homez;
 
     Rx = trajectory(:,5);
     Ry = trajectory(:,6);

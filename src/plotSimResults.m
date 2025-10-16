@@ -1,5 +1,5 @@
 function plotSimResults(out, trajectory, sp)
     params
     plotMotorInfo(out);
-    plotPlatformInfo(out, trajectory, sp.homez);
+    plotPlatformInfo(out, trajectory, sp);
 end

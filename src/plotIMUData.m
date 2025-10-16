@@ -1,5 +1,6 @@
-function plotIMUData(imu_data)
+function plotIMUData(data)
     % Load data into variables with meaningful names
+    imu_data = data(4000:8000,:);
     time = imu_data(:, 1);
     time = time - time(1);                % normalize to start at zero
 

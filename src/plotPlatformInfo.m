@@ -14,7 +14,7 @@ function [] = plotPlatformInfo(out, trajectory, sp)
     time = trajectory(:,1);
     x = trajectory(:,2);
     y = trajectory(:,3);
-    z = trajectory(:,4) + sp.homez;
+    z = trajectory(:,4) + sp.homez(3);
 
     Rx = trajectory(:,5);
     Ry = trajectory(:,6);
@@ -25,8 +25,9 @@ function [] = plotPlatformInfo(out, trajectory, sp)
 
     subplot(3,2,1);
     hold on;
-    plot(tsim, xsim, '-r', 'DisplayName', 'Simscape X');
     plot(time, x, '-b', 'DisplayName', 'Setpoint X');
+    plot(tsim, xsim, '-r', 'DisplayName', 'Simscape X');
+
     title('X Position');
     xlabel('Time (s)');
     ylabel('X Position (m)');
@@ -37,9 +38,8 @@ function [] = plotPlatformInfo(out, trajectory, sp)
 
     subplot(3,2,2);
     hold on;
-    plot(time, y, '-b', 'DisplayName', 'Setpoint Y');
     plot(tsim, ysim, '-r', 'DisplayName', 'Simscape Y');
-
+    plot(time, y, '-b', 'DisplayName', 'Setpoint Y');
     title('Y Position');
     xlabel('Time (s)');
     ylabel('Y Position (m)');
@@ -50,8 +50,8 @@ function [] = plotPlatformInfo(out, trajectory, sp)
 
     subplot(3,2,3);
     hold on;
-    plot(tsim, zsim, '-r', 'DisplayName', 'Simscape Z');
     plot(time, z, '-b', 'DisplayName', 'Setpoint Z');
+    plot(tsim, zsim, '-r', 'DisplayName', 'Simscape Z');
     title('Z Position');
     xlabel('Time (s)');
     ylabel('Z Position (m)');
@@ -62,8 +62,8 @@ function [] = plotPlatformInfo(out, trajectory, sp)
 
     subplot(3,2,4);
     hold on;
-    plot(tsim, rad2deg(Rxsim), '-r', 'DisplayName', 'Simscape Rx');
     plot(time, rad2deg(Rx), '-b', 'DisplayName', 'Setpoint Rx');
+    plot(tsim, rad2deg(Rxsim), '-r', 'DisplayName', 'Simscape Rx');
     title('Rx Orientation');
     xlabel('Time (s)');
     ylabel('Rx Orientation (deg)');
@@ -74,8 +74,8 @@ function [] = plotPlatformInfo(out, trajectory, sp)
 
     subplot(3,2,5);
     hold on;
-    plot(tsim, rad2deg(Rysim), '-r', 'DisplayName', 'Simscape Ry');
     plot(time, rad2deg(Ry), '-b', 'DisplayName', 'Setpoint Ry');
+    plot(tsim, rad2deg(Rysim), '-r', 'DisplayName', 'Simscape Ry');
     title('Ry Orientation');
     xlabel('Time (s)');
     ylabel('Ry Orientation (deg)');
@@ -86,8 +86,8 @@ function [] = plotPlatformInfo(out, trajectory, sp)
 
     subplot(3,2,6);
     hold on;
-    plot(tsim, rad2deg(Rzsim), '-r', 'DisplayName', 'Simscape Rz');
     plot(time, rad2deg(Rz), '-b', 'DisplayName', 'Setpoint Rz');
+    plot(tsim, rad2deg(Rzsim), '-r', 'DisplayName', 'Simscape Rz');
     title('Rz Orientation');
     xlabel('Time (s)');
     ylabel('Rz Orientation (deg)');
@@ -101,8 +101,8 @@ function [] = plotPlatformInfo(out, trajectory, sp)
 
     Ts = mean(diff(time));
     ddz = filter([1,-2,1],Ts^2,z);
-    plot(tsim(3:end) , azsim(3:end)/g, '-r', 'DisplayName', 'Simscape accZ');
     plot(time (3:end) ,ddz(3:end)/g, '-b', 'DisplayName', 'Setpoint accZ');
+    plot(tsim(3:end) , azsim(3:end)/g, '-r', 'DisplayName', 'Simscape accZ');
     title('Z axis acceleration');
     xlabel('Time (s)');
     ylabel('acceleration Z(g)');

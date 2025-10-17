@@ -41,7 +41,6 @@ function motorAngles = moveFunc(obj, trajectory)
             pose = trajectory(row,2:7);
             t = [pose(1) + obj.xshift, pose(2), pose(3)+ (obj.homez) + (obj.zshift)]';
             R = rotx(rad2deg(pose(4))) * roty(rad2deg(pose(5))) * rotz(rad2deg(pose(6)));
-            % % apply -Z local shift
             offset = R * -[obj.xshift; 0.0; obj.zshift];
             t = t + offset;
             % t = [pose(1); pose(2); pose(3) + obj.homez] + R * -[obj.xshift; 0; obj.zshift];

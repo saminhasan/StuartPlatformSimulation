@@ -12,7 +12,7 @@ plotTrajectory(trajectory);
 jointAngles = sp.move(trajectory);
 plotMotorAngles(jointAngles);
 
-simOut = sim("SPPD.slx");
+simOut = sim("SP.slx");
 plotSimResults(simOut, trajectory, sp);
 
 % mData = jointAngles(:, 2:7);

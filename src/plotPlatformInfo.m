@@ -21,81 +21,120 @@ function [] = plotPlatformInfo(out, trajectory, sp)
     Rz = trajectory(:,7);
 
     
-    figure('Name', 'pose vs Time (s)', 'NumberTitle', 'off');
+    % figure('Name', 'pose vs Time (s)', 'NumberTitle', 'off');
+    % 
+    % subplot(3,2,1);
+    % hold on;
+    % plot(time, x, '-b', 'DisplayName', 'Setpoint X');
+    % plot(tsim, xsim, '-r', 'DisplayName', 'Simscape X');
+    % 
+    % title('X Position');
+    % xlabel('Time (s)');
+    % ylabel('X Position (m)');
+    % legend;
+    % grid on;
+    % grid minor;
+    % hold off;
+    % 
+    % subplot(3,2,2);
+    % hold on;
+    % plot(tsim, ysim, '-r', 'DisplayName', 'Simscape Y');
+    % plot(time, y, '-b', 'DisplayName', 'Setpoint Y');
+    % title('Y Position');
+    % xlabel('Time (s)');
+    % ylabel('Y Position (m)');
+    % legend;
+    % grid on;
+    % grid minor;
+    % hold off;
+    % 
+    % subplot(3,2,3);
+    % hold on;
+    % plot(time, z, '-b', 'DisplayName', 'Setpoint Z');
+    % plot(tsim, zsim, '-r', 'DisplayName', 'Simscape Z');
+    % title('Z Position');
+    % xlabel('Time (s)');
+    % ylabel('Z Position (m)');
+    % legend;
+    % grid on;
+    % grid minor;
+    % hold off;
+    % 
+    % subplot(3,2,4);
+    % hold on;
+    % plot(time, rad2deg(Rx), '-b', 'DisplayName', 'Setpoint Rx');
+    % plot(tsim, rad2deg(Rxsim), '-r', 'DisplayName', 'Simscape Rx');
+    % title('Rx Orientation');
+    % xlabel('Time (s)');
+    % ylabel('Roll (deg)');
+    % legend;
+    % grid on;
+    % grid minor;
+    % hold off;
+    % 
+    % subplot(3,2,5);
+    % hold on;
+    % plot(time, rad2deg(Ry), '-b', 'DisplayName', 'Setpoint Ry');
+    % plot(tsim, rad2deg(Rysim), '-r', 'DisplayName', 'Simscape Ry');
+    % title('Ry Orientation');
+    % xlabel('Time (s)');
+    % ylabel('Pitch (deg)');
+    % legend;
+    % grid on;
+    % grid minor;
+    % hold off;
+    % 
+    % subplot(3,2,6);
+    % hold on;
+    % plot(time, rad2deg(Rz), '-b', 'DisplayName', 'Setpoint Rz');
+    % plot(tsim, rad2deg(Rzsim), '-r', 'DisplayName', 'Simscape Rz');
+    % title('Rz Orientation');
+    % xlabel('Time (s)');
+    % ylabel('Yaw (deg)');
+    % legend;
+    % grid on;
+    % grid minor;
+    % hold off;
+% Pose vs Time — Setpoint vs Simscape
+figure('Name','Pose vs Time','NumberTitle','off'); clf;
 
-    subplot(3,2,1);
-    hold on;
-    plot(time, x, '-b', 'DisplayName', 'Setpoint X');
-    plot(tsim, xsim, '-r', 'DisplayName', 'Simscape X');
+% LaTeX everywhere
+set(groot,'defaultAxesTickLabelInterpreter','latex');
+set(groot,'defaultTextInterpreter','latex');
+set(groot,'defaultLegendInterpreter','latex');
 
-    title('X Position');
+% Precompute degrees
+Rx_d = rad2deg(Rx); Ry_d = rad2deg(Ry); Rz_d = rad2deg(Rz);
+Rxsim_d = rad2deg(Rxsim); Rysim_d = rad2deg(Rysim); Rzsim_d = rad2deg(Rzsim);
+
+vars_set = {x, y, z, Rx_d, Ry_d, Rz_d};
+vars_sim = {xsim, ysim, zsim, Rxsim_d, Rysim_d, Rzsim_d};
+
+titles = {...
+    '$x$ position (m)', ...
+    '$y$ position (m)', ...
+    '$z$ position (m)', ...
+    '$R_x$ roll (deg)', ...
+    '$R_y$ pitch (deg)', ...
+    '$R_z$ yaw (deg)'};
+
+ylabels = {'Position (m)','Position (m)','Position (m)', ...
+           'Angle (deg)','Angle (deg)','Angle (deg)'};
+
+tiledlayout(3,2,'Padding','compact','TileSpacing','compact');
+
+for k = 1:6
+    nexttile; hold on;
+    plot(time, vars_set{k}, '-b', 'DisplayName','Setpoint');
+    plot(tsim, vars_sim{k}, '-r','DisplayName','Simscape');
+    title(titles{k});
     xlabel('Time (s)');
-    ylabel('X Position (m)');
-    legend;
-    grid on;
-    grid minor;
-    hold off;
+    ylabel(ylabels{k});
+    grid on; grid minor; box on;
+    legend('Location','northwest');
+end
 
-    subplot(3,2,2);
-    hold on;
-    plot(tsim, ysim, '-r', 'DisplayName', 'Simscape Y');
-    plot(time, y, '-b', 'DisplayName', 'Setpoint Y');
-    title('Y Position');
-    xlabel('Time (s)');
-    ylabel('Y Position (m)');
-    legend;
-    grid on;
-    grid minor;
-    hold off;
-
-    subplot(3,2,3);
-    hold on;
-    plot(time, z, '-b', 'DisplayName', 'Setpoint Z');
-    plot(tsim, zsim, '-r', 'DisplayName', 'Simscape Z');
-    title('Z Position');
-    xlabel('Time (s)');
-    ylabel('Z Position (m)');
-    legend;
-    grid on;
-    grid minor;
-    hold off;
-
-    subplot(3,2,4);
-    hold on;
-    plot(time, rad2deg(Rx), '-b', 'DisplayName', 'Setpoint Rx');
-    plot(tsim, rad2deg(Rxsim), '-r', 'DisplayName', 'Simscape Rx');
-    title('Rx Orientation');
-    xlabel('Time (s)');
-    ylabel('Rx Orientation (deg)');
-    legend;
-    grid on;
-    grid minor;
-    hold off;
-
-    subplot(3,2,5);
-    hold on;
-    plot(time, rad2deg(Ry), '-b', 'DisplayName', 'Setpoint Ry');
-    plot(tsim, rad2deg(Rysim), '-r', 'DisplayName', 'Simscape Ry');
-    title('Ry Orientation');
-    xlabel('Time (s)');
-    ylabel('Ry Orientation (deg)');
-    legend;
-    grid on;
-    grid minor;
-    hold off;
-
-    subplot(3,2,6);
-    hold on;
-    plot(time, rad2deg(Rz), '-b', 'DisplayName', 'Setpoint Rz');
-    plot(tsim, rad2deg(Rzsim), '-r', 'DisplayName', 'Simscape Rz');
-    title('Rz Orientation');
-    xlabel('Time (s)');
-    ylabel('Rz Orientation (deg)');
-    legend;
-    grid on;
-    grid minor;
-    hold off;
-
+% sgtitle('Pose vs Time — Setpoint vs Simscape','Interpreter','latex');
     figure('Name', 'acceleration Z vs Time (s)', 'NumberTitle', 'off');
     hold on;
 

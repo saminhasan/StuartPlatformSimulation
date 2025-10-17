@@ -31,8 +31,9 @@ Je = (Jmr + Jr);
 tau_0 = ((platform_mass / 6) * g * r) + (arm_mass * g * r / 2) + (rod_mass* g * r);
 
 % % Control parameters
-wn = 2 * pi * 30;
-zeta = 1/ sqrt(2); % damping ratio
+wn = 2 * pi * 15;
+% zeta = 1/ sqrt(2); % damping ratio
+zeta = 0.6; % damping ratio
 P = wn^2 * Je; % proportional gain
 D = 2 * zeta * wn * Je; % derivative gain
 w_f = wn*5; % derivative filter frequency

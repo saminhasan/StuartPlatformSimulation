@@ -1,24 +1,24 @@
-function [] = plotPlatformInfo(out, trajectory, sp)
+function [] = plotPlatformInfo(out, trajectoryB, trajectoryA, sp, rAB_body)
     params
     % Extract data from simulation output
     tsim = out.pose_simscape.Time;
-    xsim = out.pose_simscape.Data(:,1) - sp.xshift;
+    xsim = out.pose_simscape.Data(:,1);
     ysim = out.pose_simscape.Data(:,2);
-    zsim = out.pose_simscape.Data(:,3)- sp.zshift;
+    zsim = out.pose_simscape.Data(:,3);
     Rxsim = out.pose_simscape.Data(:,4);
     Rysim = out.pose_simscape.Data(:,5);
     Rzsim = out.pose_simscape.Data(:,6);
-    azsim = out.pose_simscape.Data(:,7);
+    % azsim = out.pose_simscape.Data(:,7);
 
     % Unpack values from the pose struct array simulation input
-    time = trajectory(:,1);
-    x = trajectory(:,2);
-    y = trajectory(:,3);
-    z = trajectory(:,4) + sp.homez(3);
+    time = trajectoryA(:,1);
+    x = trajectoryA(:,2);
+    y = trajectoryA(:,3);
+    z = trajectoryA(:,4) + sp.homez(3) + -rAB_body(3);
 
-    Rx = trajectory(:,5);
-    Ry = trajectory(:,6);
-    Rz = trajectory(:,7);
+    Rx = trajectoryA(:,5);
+    Ry = trajectoryA(:,6);
+    Rz = trajectoryA(:,7);
 
     
     % figure('Name', 'pose vs Time (s)', 'NumberTitle', 'off');
@@ -135,21 +135,21 @@ for k = 1:6
 end
 
 % sgtitle('Pose vs Time — Setpoint vs Simscape','Interpreter','latex');
-    figure('Name', 'acceleration Z vs Time (s)', 'NumberTitle', 'off');
-    hold on;
-
-    Ts = mean(diff(time));
-    ddz = filter([1,-2,1],Ts^2,z);
-    plot(time (3:end) ,ddz(3:end)/g, '-b', 'DisplayName', 'Setpoint accZ');
-    plot(tsim(3:end) , azsim(3:end)/g, '-r', 'DisplayName', 'Simscape accZ');
-    title('Z axis acceleration');
-    xlabel('Time (s)');
-    ylabel('acceleration Z(g)');
-    legend;
-    grid on;
-    grid minor;
-    hold off;
-    fprintf("Peak acceleration: Setpoint = %.3fg, Actual = %.3fg\n", max(ddz(3:end)/9.81), max(azsim(3:end)/9.81));
+    % figure('Name', 'acceleration Z vs Time (s)', 'NumberTitle', 'off');
+    % hold on;
+    % 
+    % Ts = mean(diff(time));
+    % ddz = filter([1,-2,1],Ts^2,z);
+    % plot(time (3:end) ,ddz(3:end)/g, '-b', 'DisplayName', 'Setpoint accZ');
+    % plot(tsim(3:end) , azsim(3:end)/g, '-r', 'DisplayName', 'Simscape accZ');
+    % title('Z axis acceleration');
+    % xlabel('Time (s)');
+    % ylabel('acceleration Z(g)');
+    % legend;
+    % grid on;
+    % grid minor;
+    % hold off;
+    % fprintf("Peak acceleration: Setpoint = %.3fg, Actual = %.3fg\n", max(ddz(3:end)/9.81), max(azsim(3:end)/9.81));
 
     
     % figure('Name', 'AccZ (m/s^2) vs Theta (degrees)', 'NumberTitle', 'off');

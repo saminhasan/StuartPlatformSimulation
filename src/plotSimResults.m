@@ -1,5 +1,5 @@
-function plotSimResults(out, trajectory, sp)
+function plotSimResults(out, trajectoryB,trajectoryA, sp, rAB_body)
     params
     plotMotorInfo(out);
-    plotPlatformInfo(out, trajectory, sp);
+    plotPlatformInfo(out, trajectoryB,trajectoryA, sp, rAB_body);
 end

@@ -2,9 +2,6 @@ function obj = StuartPlatform(r, n, rB, dB, rP, dP)
     % StuartPlatform class constructor
     % r: radius of the crank arm
     % n: crank arm to connecting rod length ratio
-    obj.zshift = 8.5 * 0.0254;
-    obj.xshift = - 0.1;
-    obj.tshift = [obj.xshift; 0.0; obj.zshift]; % reference motion profile is in torso frame(upper back), so must convert ref motion from torso frame to platform frame
     obj.r = r;
     obj.n = n;
     obj.d = n * r;
@@ -41,7 +38,7 @@ function motorAngles = moveFunc(obj, trajectory)
         for row=1:length(trajectory)
             pose = trajectory(row,2:7);
             R = eul2rotm(pose(4:6), 'XYZ');
-            t = pose(1:3)' + obj.homez + obj.tshift - R*obj.tshift;
+            t = pose(1:3)' + obj.homez;
             l = repmat(t, 1, 6)' + (R * obj.Pp')' - obj.B; % leg length
             ek = 2 * obj.r * l(:,3);
             fk = 2 * obj.r * (cos(obj.betaB') .* l(:,1) + sin(obj.betaB') .* l(:,2));

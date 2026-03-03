@@ -84,27 +84,27 @@ grid on;grid minor;
 hold off;
 
 
-figure('Name', 'Torque (Nm) vs Theta (degrees)', 'NumberTitle', 'off');
-hold on;
-time_plots = gobjects(1, 6); 
-for i = 1:6
-    % Plot torque vs time for each motor
-    time_plots(i) = plot(rad2deg(thetas(:, i)), tau_motor(:, i), 'Color', colors(i));
-    labels{i} = ['Motor ' num2str(i)]; % Store labels in a cell array
-end
-
-% Add legend with motor labels
-legend(time_plots, labels, 'Location', 'northwest');
-
-% Add y-lines for motor peaks and rated values
-yline(peak_torque, '-r', 'T-motor-peak', 'HandleVisibility', 'off', 'LabelVerticalAlignment','top');
-yline(rated_torque, '-g', 'T-motor-rated', 'HandleVisibility', 'off', 'LabelVerticalAlignment','top');
-yline(-rated_torque, '-g', 'T-motor-rated', 'HandleVisibility', 'off', 'LabelVerticalAlignment','bottom');
-yline(-peak_torque, '-r', 'T-motor-peak', 'HandleVisibility', 'off', 'LabelVerticalAlignment','bottom');
-
-xlabel('Theta (degrees)');
-ylabel('Torque (Nm)');
-title('Torque (Nm) vs Theta (degrees');
-grid on;
-grid minor;
-hold off;
+% figure('Name', 'Torque (Nm) vs Theta (degrees)', 'NumberTitle', 'off');
+% hold on;
+% time_plots = gobjects(1, 6); 
+% for i = 1:6
+%     % Plot torque vs time for each motor
+%     time_plots(i) = plot(rad2deg(thetas(:, i)), tau_motor(:, i), 'Color', colors(i));
+%     labels{i} = ['Motor ' num2str(i)]; % Store labels in a cell array
+% end
+% 
+% % Add legend with motor labels
+% legend(time_plots, labels, 'Location', 'northwest');
+% 
+% % Add y-lines for motor peaks and rated values
+% yline(peak_torque, '-r', 'T-motor-peak', 'HandleVisibility', 'off', 'LabelVerticalAlignment','top');
+% yline(rated_torque, '-g', 'T-motor-rated', 'HandleVisibility', 'off', 'LabelVerticalAlignment','top');
+% yline(-rated_torque, '-g', 'T-motor-rated', 'HandleVisibility', 'off', 'LabelVerticalAlignment','bottom');
+% yline(-peak_torque, '-r', 'T-motor-peak', 'HandleVisibility', 'off', 'LabelVerticalAlignment','bottom');
+% 
+% xlabel('Theta (degrees)');
+% ylabel('Torque (Nm)');
+% title('Torque (Nm) vs Theta (degrees');
+% grid on;
+% grid minor;
+% hold off;

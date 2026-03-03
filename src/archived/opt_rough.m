@@ -1,0 +1,65 @@
+% Prealloc
+metric_peak = zeros(sim_no,1);     % worst joint peak torque for each N
+metric_rms  = zeros(sim_no,1);     % worst joint RMS torque for each N
+Tpeak_all   = zeros(sim_no,6);     % per-joint peak torque for each N
+Trms_all    = zeros(sim_no,6);     % per-joint RMS torque for each N
+w = 1 + 0.5*abs(pbs-0.7);
+for i = 1:sim_no
+    pb = pbs(i);
+    out = outs{i};
+
+    t          = out.simout.Time;
+    dt         = [diff(t); max(1e-12, t(end)-t(end-1))];  % handle non-uniform, avoid zero
+    omegas     = out.simout.Data(:, 2:4:22);               % rad/s   (6 cols)
+    alphas     = out.simout.Data(:, (2:4:22)+1);           % rad/s^2 (6 cols)
+    taus_load  = out.simout.Data(:, (2:4:22)+2);           % N·m     (6 cols)
+
+    % --- Torque model (basic): motor torque = load torque ---
+    tau_m = taus_load;
+
+    % Per-joint metrics for this N
+    Tpeak_i = max(abs(tau_m), [], 1) * w(i);                                   % 1x6
+    Trms_i  = sqrt( sum((tau_m.^2).*dt, 1) / sum(dt) )* w(i);                 % 1x6
+
+    % Store
+    Tpeak_all(i,:) = Tpeak_i;
+    Trms_all(i,:)  = Trms_i;
+
+    % Conservative aggregate = worst joint
+    metric_peak(i) = max(Tpeak_i);
+    metric_rms(i)  = max(Trms_i);
+end
+
+% % Best N (by each metric)
+% [~, idx_best_peak] = min(metric_peak);
+% [~, idx_best_rms ] = min(metric_rms);
+% N_best_peak = pbs(idx_best_peak);
+% N_best_rms  = pbs(idx_best_rms);
+[~, idx_best_peak] = min(metric_peak .* w);
+[~, idx_best_rms ] = min(metric_rms  .* w);
+N_best_peak = pbs(idx_best_peak);
+N_best_rms  = pbs(idx_best_rms);
+
+set(groot,'defaultTextInterpreter','latex');
+set(groot,'defaultAxesTickLabelInterpreter','latex');
+set(groot,'defaultLegendInterpreter','latex');
+
+figure; hold on; grid on;
+
+plot(pbs, metric_peak, '-o', 'LineWidth', 1.2, 'MarkerSize', 4);
+plot(pbs, metric_rms,  '-s', 'LineWidth', 1.2, 'MarkerSize', 4);
+
+hx1 = xline(N_best_peak, '--', sprintf('Lowest Peak Torque ($N_{r}$ = %.3g)', N_best_peak), 'LabelOrientation','horizontal', 'LabelVerticalAlignment','middle');
+hx2 = xline(N_best_rms,  ':',  sprintf('Lowest RMS Torque ($N_{r}$ = %.3g)', N_best_rms), 'LabelOrientation','horizontal', 'LabelVerticalAlignment','bottom');
+set(hx1, 'Interpreter','latex');  % make xline labels LaTeX
+set(hx2, 'Interpreter','latex');  % make xline labels LaTeX
+
+xlabel('$N_r$');
+ylabel('Torque [N$\cdot$m]');
+title('Joint torque vs $N_r$');
+legend('Peak torque', 'RMS torque', 'Location','best');
+
+
+
+
+

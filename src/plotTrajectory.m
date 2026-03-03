@@ -1,54 +1,127 @@
 function plotTrajectory(trajectory)
-    time = trajectory(:,1);
-    z = trajectory(:,4);
+time = trajectory(:,1);
 
-    Rx = trajectory(:,5); % roll (rad)
-    Ry = trajectory(:,6); % pitch (rad)
-    Rz = trajectory(:,7); % yaw (rad)
+x = trajectory(:,2);
+y = trajectory(:,3);
+z = trajectory(:,4);
 
-    f_pose = figure('Name', 'Pose vs Time', 'NumberTitle', 'off');
-    f_pose.Theme = "light";
+r = trajectory(:,5); % roll  (rad)
+p = trajectory(:,6); % pitch (rad)
+yw = trajectory(:,7); % yaw   (rad)
 
-    % Z Position
-    subplot(2,2,1);
-    plot(time, z, 'b', 'LineWidth', 1.2, 'DisplayName', '$z$');
-    title('Vertical Position', 'Interpreter', 'latex');
-    xlabel('Time (s)', 'Interpreter', 'latex');
-    ylabel('Position $[\mathrm{m}]$', 'Interpreter', 'latex');
-    ax1 = gca; ax1.TickLabelInterpreter = 'latex';
-    leg1 = legend('show', 'Location', 'best'); set(leg1, 'Interpreter', 'latex');
-    grid on; grid minor;
+% ---- XYZ figure ----
+f_xyz = figure('Name','XYZ vs Time','NumberTitle','off');
+f_xyz.Theme = "light";
 
-    % Roll (phi)
-    subplot(2,2,2);
-    plot(time, rad2deg(Rx), 'r', 'LineWidth', 1.2, 'DisplayName', '$\phi$');
-    title('Roll $\phi$', 'Interpreter', 'latex');
-    xlabel('Time (s)', 'Interpreter', 'latex');
-    ylabel('Angle(degrees)', 'Interpreter', 'latex');
-    ax2 = gca; ax2.TickLabelInterpreter = 'latex';
-    leg2 = legend('show', 'Location', 'best'); set(leg2, 'Interpreter', 'latex');
-    grid on; grid minor;
+subplot(3,1,1);
+plot(time, x, 'LineWidth', 1.2, 'DisplayName', '$x$');
+title('Position $x$', 'Interpreter','latex');
+xlabel('Time (s)', 'Interpreter','latex');
+ylabel('Position $[\mathrm{m}]$', 'Interpreter','latex');
+ax = gca; ax.TickLabelInterpreter = 'latex';
+leg = legend('show','Location','best'); set(leg,'Interpreter','latex');
+grid on; grid minor;
 
-    % Pitch (theta)
-    subplot(2,2,3);
-    plot(time, rad2deg(Ry), 'g', 'LineWidth', 1.2, 'DisplayName', '$\theta$');
-    title('Pitch $\theta$', 'Interpreter', 'latex');
-    xlabel('Time (s)', 'Interpreter', 'latex');
-    ylabel('Angle(degrees)', 'Interpreter', 'latex');
-    ax3 = gca; ax3.TickLabelInterpreter = 'latex';
-    leg3 = legend('show', 'Location', 'best'); set(leg3, 'Interpreter', 'latex');
-    grid on; grid minor;
+subplot(3,1,2);
+plot(time, y, 'LineWidth', 1.2, 'DisplayName', '$y$');
+title('Position $y$', 'Interpreter','latex');
+xlabel('Time (s)', 'Interpreter','latex');
+ylabel('Position $[\mathrm{m}]$', 'Interpreter','latex');
+ax = gca; ax.TickLabelInterpreter = 'latex';
+leg = legend('show','Location','best'); set(leg,'Interpreter','latex');
+grid on; grid minor;
 
-    % Yaw (psi)
-    subplot(2,2,4);
-    plot(time, rad2deg(Rz), 'm', 'LineWidth', 1.2, 'DisplayName', '$\psi$');
-    title('Yaw $\psi$', 'Interpreter', 'latex');
-    xlabel('Time (s)', 'Interpreter', 'latex');
-    ylabel('Angle(degrees)', 'Interpreter', 'latex');
-    ax4 = gca; ax4.TickLabelInterpreter = 'latex';
-    leg4 = legend('show', 'Location', 'best'); set(leg4, 'Interpreter', 'latex');
-    grid on; grid minor;
+subplot(3,1,3);
+plot(time, z, 'LineWidth', 1.2, 'DisplayName', '$z$');
+title('Position $z$', 'Interpreter','latex');
+xlabel('Time (s)', 'Interpreter','latex');
+ylabel('Position $[\mathrm{m}]$', 'Interpreter','latex');
+ax = gca; ax.TickLabelInterpreter = 'latex';
+leg = legend('show','Location','best'); set(leg,'Interpreter','latex');
+grid on; grid minor;
+
+% ---- RPY figure ----
+f_rpy = figure('Name','RPY vs Time','NumberTitle','off');
+f_rpy.Theme = "light";
+
+subplot(3,1,1);
+plot(time, rad2deg(r), 'LineWidth', 1.2, 'DisplayName', '$\phi$');
+title('Roll $\phi$', 'Interpreter','latex');
+xlabel('Time (s)', 'Interpreter','latex');
+ylabel('Angle (deg)', 'Interpreter','latex');
+ax = gca; ax.TickLabelInterpreter = 'latex';
+leg = legend('show','Location','best'); set(leg,'Interpreter','latex');
+grid on; grid minor;
+
+subplot(3,1,2);
+plot(time, rad2deg(p), 'LineWidth', 1.2, 'DisplayName', '$\theta$');
+title('Pitch $\theta$', 'Interpreter','latex');
+xlabel('Time (s)', 'Interpreter','latex');
+ylabel('Angle (deg)', 'Interpreter','latex');
+ax = gca; ax.TickLabelInterpreter = 'latex';
+leg = legend('show','Location','best'); set(leg,'Interpreter','latex');
+grid on; grid minor;
+
+subplot(3,1,3);
+plot(time, rad2deg(yw), 'LineWidth', 1.2, 'DisplayName', '$\psi$');
+title('Yaw $\psi$', 'Interpreter','latex');
+xlabel('Time (s)', 'Interpreter','latex');
+ylabel('Angle (deg)', 'Interpreter','latex');
+ax = gca; ax.TickLabelInterpreter = 'latex';
+leg = legend('show','Location','best'); set(leg,'Interpreter','latex');
+grid on; grid minor;
 end
+% function plotTrajectory(trajectory)
+%     time = trajectory(:,1);
+%     z = trajectory(:,4);
+% 
+%     Rx = trajectory(:,5); % roll (rad)
+%     Ry = trajectory(:,6); % pitch (rad)
+%     Rz = trajectory(:,7); % yaw (rad)
+% 
+%     f_pose = figure('Name', 'Pose vs Time', 'NumberTitle', 'off');
+%     f_pose.Theme = "light";
+% 
+%     % Z Position
+%     subplot(2,2,1);
+%     plot(time, z, 'b', 'LineWidth', 1.2, 'DisplayName', '$z$');
+%     title('Vertical Position', 'Interpreter', 'latex');
+%     xlabel('Time (s)', 'Interpreter', 'latex');
+%     ylabel('Position $[\mathrm{m}]$', 'Interpreter', 'latex');
+%     ax1 = gca; ax1.TickLabelInterpreter = 'latex';
+%     leg1 = legend('show', 'Location', 'best'); set(leg1, 'Interpreter', 'latex');
+%     grid on; grid minor;
+% 
+%     % Roll (phi)
+%     subplot(2,2,2);
+%     plot(time, rad2deg(Rx), 'r', 'LineWidth', 1.2, 'DisplayName', '$\phi$');
+%     title('Roll $\phi$', 'Interpreter', 'latex');
+%     xlabel('Time (s)', 'Interpreter', 'latex');
+%     ylabel('Angle(degrees)', 'Interpreter', 'latex');
+%     ax2 = gca; ax2.TickLabelInterpreter = 'latex';
+%     leg2 = legend('show', 'Location', 'best'); set(leg2, 'Interpreter', 'latex');
+%     grid on; grid minor;
+% 
+%     % Pitch (theta)
+%     subplot(2,2,3);
+%     plot(time, rad2deg(Ry), 'g', 'LineWidth', 1.2, 'DisplayName', '$\theta$');
+%     title('Pitch $\theta$', 'Interpreter', 'latex');
+%     xlabel('Time (s)', 'Interpreter', 'latex');
+%     ylabel('Angle(degrees)', 'Interpreter', 'latex');
+%     ax3 = gca; ax3.TickLabelInterpreter = 'latex';
+%     leg3 = legend('show', 'Location', 'best'); set(leg3, 'Interpreter', 'latex');
+%     grid on; grid minor;
+% 
+%     % Yaw (psi)
+%     subplot(2,2,4);
+%     plot(time, rad2deg(Rz), 'm', 'LineWidth', 1.2, 'DisplayName', '$\psi$');
+%     title('Yaw $\psi$', 'Interpreter', 'latex');
+%     xlabel('Time (s)', 'Interpreter', 'latex');
+%     ylabel('Angle(degrees)', 'Interpreter', 'latex');
+%     ax4 = gca; ax4.TickLabelInterpreter = 'latex';
+%     leg4 = legend('show', 'Location', 'best'); set(leg4, 'Interpreter', 'latex');
+%     grid on; grid minor;
+% end
 
 
 % function plotTrajectory(trajectory)

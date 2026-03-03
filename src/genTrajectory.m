@@ -13,6 +13,8 @@ function trajectory = genTrajectory(type, num_cycle)
             trajectory = genPoseImu(num_cycle);
         case 'mix'
             trajectory = genPoseMix(num_cycle);
+        case 'c1'
+            trajectory = genPoseC1(num_cycle);
         otherwise
             error('genTrajectory:UnknownType', 'Unknown mode "%s". Valid modes are sin, syn, cam, imu.', type);
     end

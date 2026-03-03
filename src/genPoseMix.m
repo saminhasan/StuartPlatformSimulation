@@ -16,4 +16,5 @@ function trajectory = genPoseMix(n)
     phi0=2*pi/p*t0;
     t_mod = mod(time + 0.0640,p); % to match with cam trajectory
     trajectory(:,4) = (-g + gm)/2 * t_mod.^2 - gm * (p/2/pi)^2 * cos(2*pi/p*t_mod+phi0) + j1/(o+1)/(o+2) * min(t_mod,tE).^(o+2) + j1/(o+1)*((t_mod>tE).*tE).^(o+1).*(t_mod-tE);
+    trajectory(:,4) = trajectory(:,4) - mean(trajectory(:,4));
 end

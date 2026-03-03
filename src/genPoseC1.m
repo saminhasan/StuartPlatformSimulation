@@ -5,6 +5,7 @@ S = load('trajectory.mat');          % loads into struct
 traj = S.trajectory;
 
 t  = traj(:,1);
+t = t - t(1);
 x  = traj(:,2);
 y  = traj(:,3);
 z  = traj(:,4);
@@ -14,5 +15,14 @@ Rz = deg2rad(traj(:,7));
 
 % plot(t,x,t,y,t,z, t,Rx,t,Ry,t,Rz);
 tq = (0:1e-3:t(end)).';
-trajectory = [tq, interp1(t, [x y z Rx Ry Rz], tq, 'linear')];
+x = spline(t,x,tq);
+y = spline(t,y,tq);
+z = spline(t,z,tq);
+Rx = spline(t,Rx,tq);
+Ry = spline(t,Ry,tq);
+Rz = spline(t,Rz,tq);
+    trajectory = [tq, x, y, z, Rx, Ry, Rz];
+
+% trajectory = [tq, spline(t, [x y z Rx Ry Rz]', tq')'];
+% plot(t,x,t,y,t,z, t,Rx,t,Ry,t,Rz);
 end

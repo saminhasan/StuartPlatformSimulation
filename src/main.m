@@ -12,12 +12,12 @@ trajectoryB = rigid_transform(trajectoryA,rAB_body);
 time = trajectoryB(:,1);
 tf = time(end);
 trajectoryB = window(trajectoryB, 2.0, fs);
-% plotTrajectory(trajectoryB);
+plotTrajectory(trajectoryB);
 jointAngles = sp.move(trajectoryB);
 plotMotorAngles(jointAngles);
 % 
-% simOut = sim("SP.slx");
-% plotSimResults(simOut, trajectoryB,trajectoryA, sp,rAB_body);
+simOut = sim("SP.slx");
+plotSimResults(simOut, trajectoryB,trajectoryA, sp,rAB_body);
 % % 
 % % mData = jointAngles(:, 2:7);
 % % writematrix(mData, "imuTraj.csv")

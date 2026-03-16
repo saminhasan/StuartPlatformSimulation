@@ -4,7 +4,7 @@ sp = StuartPlatform(r, n, rB, dB, rP, dP);
 modes = {'sin', 'syn', 'cam', 'imu', 'mix','c1'};
 mode = modes{1};
 trajectoryA = genTrajectory(mode, 10);
-trajectoryA(:,6) = trajectoryA(:,6) - deg2rad(6);
+% trajectoryA(:,6) = trajectoryA(:,6) - deg2rad(6);
 plotTrajectory(trajectoryA);
 
 rAB_body = [0;0;-0.25];
@@ -20,5 +20,5 @@ plotMotorAngles(jointAngles);
 simOut = sim("SP.slx");
 plotSimResults(simOut, trajectoryB,trajectoryA, sp,rAB_body);
 % % 
-% mData = jointAngles(:, 2:7);
-% writematrix(mData, "c1Traj.csv")
+mData = jointAngles(:, 2:7);
+writematrix(mData, "RyTraj.csv")

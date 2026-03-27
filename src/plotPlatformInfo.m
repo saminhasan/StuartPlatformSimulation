@@ -11,14 +11,14 @@ function [] = plotPlatformInfo(out, trajectoryB, trajectoryA, sp, rAB_body)
     % azsim = out.pose_simscape.Data(:,7);
 
     % Unpack values from the pose struct array simulation input
-    time = trajectoryA(:,1);
-    x = trajectoryA(:,2);
-    y = trajectoryA(:,3);
-    z = trajectoryA(:,4) + sp.homez(3) + -rAB_body(3);
+    time = trajectoryB(:,1);
+    x = trajectoryB(:,2);
+    y = trajectoryB(:,3);
+    z = trajectoryB(:,4) + sp.homez(3) + -rAB_body(3);
 
-    Rx = trajectoryA(:,5);
-    Ry = trajectoryA(:,6);
-    Rz = trajectoryA(:,7);
+    Rx = trajectoryB(:,5);
+    Ry = trajectoryB(:,6);
+    Rz = trajectoryB(:,7);
 
     
     % figure('Name', 'pose vs Time (s)', 'NumberTitle', 'off');

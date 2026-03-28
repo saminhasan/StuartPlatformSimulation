@@ -12,4 +12,5 @@ for k = 1:n
     poseB(k,1:3) = poseA(k,1:3) + (R*rAB_body).';
 end
 poseB(:,2:4) = poseB(:,2:4) - mean(poseB(:,2:4));
+poseB(:,4) = poseB(:,4) - mean(poseB(:,4)) + 0.02;
 end

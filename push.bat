@@ -5,6 +5,7 @@ REM === CONFIG ===
 set COMMIT_MSG=quick sync
 
 echo Adding all changes...
+git diff
 git add .
 
 echo Committing...

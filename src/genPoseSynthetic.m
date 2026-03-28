@@ -26,13 +26,13 @@ function trajectory = genPoseSynthetic(n)
 
     f_trajectory = 1/p;
 
-    x = 0.05  * sin(2 * pi * f_trajectory * time)*0; % x (horizontal component, front back)
-    y = 0.05  * sin(2 * pi * f_trajectory * time)*0; % y (horizontal component, left side right side)
+    x = 0.05  * sin(2 * pi * f_trajectory * time); % x (horizontal component, front back)
+    y = 0.05  * sin(2 * pi * f_trajectory * time); % y (horizontal component, left side right side)
     z = s - mean(s);% z (vertical component, up down)
 
-    Rx = deg2rad(3.0)  *  sin(2 * pi * f_trajectory/2 * time+ phi0 -pi/2)*0; % roll
-    Ry = (deg2rad(2.5) * sin(2 * pi *  f_trajectory * time+ phi0 -pi/2) + deg2rad(10))*0; % pitch
-    Rz = deg2rad(15.0)  *  sin(2 * pi * f_trajectory/2 * time + phi0 -pi/2)*0; % yaw
+    Rx = deg2rad(3.0)  *  sin(2 * pi * f_trajectory/2 * time+ phi0 -pi/2); % roll
+    Ry = (deg2rad(2.5) * sin(2 * pi *  f_trajectory * time+ phi0 -pi/2) + deg2rad(10)); % pitch
+    Rz = deg2rad(15.0)  *  sin(2 * pi * f_trajectory/2 * time + phi0 -pi/2); % yaw
 
     trajectory = [time, x, y, z, Rx, Ry, Rz];
 end

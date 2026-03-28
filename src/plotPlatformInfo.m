@@ -1,4 +1,4 @@
-function [] = plotPlatformInfo(out, trajectoryB, trajectoryA, sp, rAB_body)
+function [] = plotPlatformInfo(out, trajectoryB, sp, rAB_body)
     params
     % Extract data from simulation output
     tsim = out.pose_simscape.Time;
@@ -12,10 +12,12 @@ function [] = plotPlatformInfo(out, trajectoryB, trajectoryA, sp, rAB_body)
 
     % Unpack values from the pose struct array simulation input
     time = trajectoryB(:,1);
+    % x = trajectoryB(:,2)- rAB_body(1);
+    % y = trajectoryB(:,3) - rAB_body(2);
+    % z = trajectoryB(:,4) + sp.homez(3) -rAB_body(3);
     x = trajectoryB(:,2);
     y = trajectoryB(:,3);
-    z = trajectoryB(:,4) + sp.homez(3) + -rAB_body(3);
-
+    z = trajectoryB(:,4) + sp.homez(3);
     Rx = trajectoryB(:,5);
     Ry = trajectoryB(:,6);
     Rz = trajectoryB(:,7);

@@ -31,6 +31,7 @@ function obj = StuartPlatform(r, n, rB, dB, rP, dP)
     %--------calculate quaternion------------------------------------------
     obj.move = @(pose) moveFunc(obj, pose);
     obj.calcP = @(pose) calcFunc(obj, pose);
+    obj.calcQrots = @(pose, theta) calcQrotsFunc(obj, pose, theta);
 end
 
 function motorAngles = moveFunc(obj, trajectory)
@@ -46,4 +47,33 @@ function motorAngles = moveFunc(obj, trajectory)
             motorAngles(row,2:7) = theta';
         end
      motorAngles(:,1) = trajectory(:,1);
+end
+function q_rots = calcQrotsFunc(obj, pose, theta)
+    % pose = [x y z Rx Ry Rz]
+    % theta = 6x1 or 1x6 motor angles
+
+    R = eul2rotm(pose(4:6), 'XYZ');
+    t = pose(1:3)' + obj.homez;
+
+    % 1) platform points in base frame
+    P = repmat(t, 1, 6)' + (R * obj.Pp')';
+
+    % 2) horn tip points in base frame
+    theta = theta(:);
+    H = obj.B + [ ...
+        obj.r*cos(theta).*cos(obj.betaB(:)), ...
+        obj.r*cos(theta).*sin(obj.betaB(:)), ...
+        obj.r*sin(theta) ...
+    ];
+
+    % 3) rod vectors in base frame
+    HP = P - H;
+
+    % 4) same quaternion process as constructor
+    q_rots = zeros(6,4);
+    for i = 1:6
+        u = roty(rad2deg(theta(i))) * rotz(rad2deg(obj.betaB(i))) * rotx(90);
+        v = u \ HP(i,:)';
+        q_rots(i,:) = calcQuat([1;0;0], v);
+    end
 end

@@ -9,6 +9,6 @@ function trajectory = genPoseCam(n)
     rawTrajectory(:,1) = (0:ts:tEnd)';
     rawTrajectory(:,4:7) = repmat(data(:,4:7) - mean(data(:,4:7),1), n, 1);
     rawTrajectory(:,5:7) = deg2rad(rawTrajectory(:,5:7));
-    rawTrajectory(:,6) = rawTrajectory(:,6) - min(rawTrajectory(:,6));
+    rawTrajectory(:,6) = rawTrajectory(:,6) - mean(rawTrajectory(:,6));
     trajectory = [te, spline(rawTrajectory(:,1), rawTrajectory(:,2:7)', te')'];
 end

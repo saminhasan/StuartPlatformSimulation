@@ -24,9 +24,9 @@ function obj = StuartPlatform(r, n, rB, dB, rP, dP)
     %--------calculate quaternion for correct simscape initialization------------------------------------------
     obj.q_rots = zeros(6, 4);
     for i = 1:6
-        u = rotz(rad2deg(beta(i))) * rotx(90) * [1 0 0; 0 1 0; 0 0 1]; % u is the co-ordinate frame at the tip of the servo
+        u = rotz(rad2deg(beta(i))) * rotx(90) * [1 0 0; 0 1 0; 0 0 1];
         v = u\obj.HP(i,:)';% from o frame to u frame
-        obj.q_rots(i, :) = calcQuat([1, 0 ,0]', v); % calculate the quat w.r.t to x frame.
+        obj.q_rots(i, :) = calcQuat([1, 0 ,0]', v);
     end
     %--------calculate quaternion------------------------------------------
     obj.move = @(pose) moveFunc(obj, pose);
@@ -49,31 +49,10 @@ function motorAngles = moveFunc(obj, trajectory)
      motorAngles(:,1) = trajectory(:,1);
 end
 function q_rots = calcQrotsFunc(obj, pose, theta)
-    % pose = [x y z Rx Ry Rz]
-    % theta = 6x1 or 1x6 motor angles
+    theta = theta(:);
 
     R = eul2rotm(pose(4:6), 'XYZ');
     t = pose(1:3)' + obj.homez;
 
-    % 1) platform points in base frame
-    P = repmat(t, 1, 6)' + (R * obj.Pp')';
-
-    % 2) horn tip points in base frame
-    theta = theta(:);
-    H = obj.B + [ ...
-        obj.r*cos(theta).*cos(obj.betaB(:)), ...
-        obj.r*cos(theta).*sin(obj.betaB(:)), ...
-        obj.r*sin(theta) ...
-    ];
-
-    % 3) rod vectors in base frame
-    HP = P - H;
-
-    % 4) same quaternion process as constructor
     q_rots = zeros(6,4);
-    for i = 1:6
-        u = roty(rad2deg(theta(i))) * rotz(rad2deg(obj.betaB(i))) * rotx(90);
-        v = u \ HP(i,:)';
-        q_rots(i,:) = calcQuat([1;0;0], v);
-    end
 end

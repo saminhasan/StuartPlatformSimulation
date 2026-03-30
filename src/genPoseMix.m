@@ -6,7 +6,7 @@ function trajectory = genPoseMix(n)
                    % changes the maximum displacement:
                    %    p=0.33 --> -4cm to +2cm
                    %    p=0.40 --> -6cm to +2cm
-    amax = 4*g;    % maximum accelertaion, little impact on displacement or velocity
+    amax = 6*g;    % maximum accelertaion, little impact on displacement or velocity
     time = trajectory(:,1) ;
     % internal model parameters, do not touch
     o = (amax - 4*g + 4*gm + sqrt(amax^2 + 8*amax*g - 8*amax*gm))/(4*(g - gm));

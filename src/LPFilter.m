@@ -1,8 +1,8 @@
 function filteredSignal = LPFilter(signal, fs, fc)
-    w1 = 2 * pi * fc; % Angular cutoff frequency
+    w1 = 2 * pi * fc;
     zeta1 = 0.707;
-    Bw = [0, 0, 0, w1^3];
-    Aw = [1,2*zeta1*w1,w1^2];
+    Bw = [w1^3];
+    Aw = conv([1, w1], [1, 2*zeta1*w1, w1^2]);
     Gz = c2d(tf(Bw, Aw), 1/fs);
     Bz = Gz.Numerator{1};
     Az = Gz.Denominator{1};

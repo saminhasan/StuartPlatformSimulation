@@ -13,6 +13,7 @@ time = trajectoryB(:,1);
 tf = time(end);
 plotTrajectory(trajectoryB);
 jointAngles = sp.move(trajectoryB);
+% apply reverse transform to get reference
 plotMotorAngles(jointAngles);
 % sp.q_rots = sp.calcQrots(trajectoryB(1,2:7), -jointAngles(1,2:7));
 % % 
